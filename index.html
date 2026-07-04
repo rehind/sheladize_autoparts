@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gold Standard | Premium Auto Parts</title>
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:ital,wght@1,800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --gold-liquid: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
+            --ios-blur: blur(25px);
+            --black-depth: #050505;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--black-depth);
+            font-family: 'Inter', sans-serif;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+
+        /* --- Animated Liquid Background --- */
+        .liquid-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            filter: blur(80px);
+            background: radial-gradient(circle at 50% 50%, #111, #000);
+        }
+
+        .blob {
+            position: absolute;
+            background: #FFD700;
+            opacity: 0.15;
+            border-radius: 50%;
+            animation: move 20s infinite alternate;
+        }
+
+        .blob-1 { width: 400px; height: 400px; top: -100px; left: -100px; background: #FFD700; }
+        .blob-2 { width: 300px; height: 300px; bottom: -50px; right: -50px; background: #B8860B; animation-delay: -5s; }
+        .blob-3 { width: 250px; height: 250px; top: 40%; left: 30%; background: #DAA520; animation-delay: -10s; }
+
+        @keyframes move {
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(50px, 100px) scale(1.2); }
+        }
+
+        /* --- Main Container --- */
+        .iphone-container {
+            width: 100%;
+            max-width: 430px;
+            margin-top: 40px;
+            z-index: 1;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Profile Section --- */
+        .profile-card {
+            background: var(--glass);
+            backdrop-filter: var(--ios-blur);
+            -webkit-backdrop-filter: var(--ios-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: 40px;
+            padding: 40px 25px;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .avatar-glow {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 20px;
+        }
+
+        .avatar-glow::after {
+            content: '';
+            position: absolute;
+            top: -5px; left: -5px; right: -5px; bottom: -5px;
+            background: var(--gold-liquid);
+            border-radius: 35px;
+            z-index: -1;
+            opacity: 0.5;
+            filter: blur(10px);
+        }
+
+        .profile-pic {
+            width: 110px;
+            height: 110px;
+            border-radius: 30px;
+            object-fit: cover;
+            border: 2px solid rgba(255,215,0,0.3);
+        }
+
+        .brand-name {
+            font-family: 'Montserrat', sans-serif;
+            font-style: italic;
+            font-weight: 800;
+            font-size: 1.8rem;
+            letter-spacing: -1px;
+            background: linear-gradient(to bottom, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 215, 0, 0.1);
+            color: #FFD700;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .status-pill i { font-size: 0.5rem; margin-right: 6px; }
+
+        .description {
+            font-size: 0.9rem;
+            color: #aaa;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        /* --- Glass Links --- */
+        .links-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .glass-link {
+            display: flex;
+            align-items: center;
+            background: var(--glass);
+            backdrop-filter: var(--ios-blur);
+            -webkit-backdrop-filter: var(--ios-blur);
+            border: 1px solid var(--glass-border);
+            padding: 18px 22px;
+            border-radius: 24px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-link:active {
+            transform: scale(0.96);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .icon-box {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+            font-size: 1.2rem;
+            color: #FFD700;
+            box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
+        }
+
+        .link-text {
+            flex-grow: 1;
+        }
+
+        .link-text b {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .link-text span {
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        .chevron {
+            font-size: 0.8rem;
+            color: #444;
+        }
+
+        /* --- Highlighted Website Button --- */
+        .premium-btn {
+            background: var(--gold-liquid);
+            border: none;
+            box-shadow: 0 10px 30px rgba(184, 134, 11, 0.3);
+        }
+
+        .premium-btn .icon-box { background: rgba(0,0,0,0.2); color: white; }
+        .premium-btn .link-text b { color: #000; }
+        .premium-btn .link-text span { color: rgba(0,0,0,0.5); }
+        .premium-btn .chevron { color: #000; }
+
+        /* --- Footer --- */
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            padding-bottom: 40px;
+        }
+
+        .support-btn {
+            background: transparent;
+            border: 1px solid #FFD700;
+            color: #FFD700;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        .support-btn:hover {
+            background: #FFD700;
+            color: #000;
+        }
+
+        .copy {
+            margin-top: 25px;
+            font-size: 0.65rem;
+            color: #444;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Carbon Texture Detail */
+        .carbon-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="liquid-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="carbon-overlay"></div>
+
+    <div class="iphone-container">
+        <!-- Header Profile Card -->
+        <header class="profile-card">
+            <div class="avatar-glow">
+                <img src="https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&q=80&w=300" alt="Brand Logo" class="profile-pic">
+            </div>
+            <h1 class="brand-name">VELOCITY GOLD</h1>
+            <div class="status-pill">
+                <i class="fas fa-circle"></i> Certified Performance Dealer
+            </div>
+            <p class="description">Elevating the automotive experience with liquid-smooth precision and premium-grade components.</p>
+        </header>
+
+        <!-- Dynamic Link List -->
+        <nav class="links-grid">
+            
+            <!-- Professional Website -->
+            <a href="#" class="glass-link premium-btn">
+                <div class="icon-box"><i class="fas fa-globe"></i></div>
+                <div class="link-text">
+                    <b>Official Boutique</b>
+                    <span>Order High-Performance Parts</span>
+                </div>
+                <i class="fas fa-chevron-right chevron"></i>
+            </a>
+
+            <!-- WhatsApp -->
+            <a href="#" class="glass-link">
+                <div class="icon-box"><i class="fab fa-whatsapp"></i></div>
+                <div class="link-text">
+                    <b>WhatsApp VIP</b>
+                    <span>Direct line to our lead mechanic</span>
+                </div>
+                <i class="fas fa-chevron-right chevron"></i>
+            </a>
+
+            <!-- Instagram -->
+            <a href="#" class="glass-link">
+                <div class="icon-box"><i class="fab fa-instagram"></i></div>
+                <div class="link-text">
+                    <b>Showroom Instagram</b>
+                    <span>Visuals of our latest gold-tier builds</span>
+                </div>
+                <i class="fas fa-chevron-right chevron"></i>
+            </a>
+
+            <!-- TikTok -->
+            <a href="#" class="glass-link">
+                <div class="icon-box"><i class="fab fa-tiktok"></i></div>
+                <div class="link-text">
+                    <b>Velocity TV (TikTok)</b>
+                    <span>Raw exhaust notes & part reveals</span>
+                </div>
+                <i class="fas fa-chevron-right chevron"></i>
+            </a>
+
+            <!-- Snapchat -->
+            <a href="#" class="glass-link">
+                <div class="icon-box"><i class="fab fa-snapchat"></i></div>
+                <div class="link-text">
+                    <b>Daily Garage Snaps</b>
+                    <span>Exclusive look behind the curtain</span>
+                </div>
+                <i class="fas fa-chevron-right chevron"></i>
+            </a>
+
+            <!-- Location -->
+            <a href="#" class="glass-link">
+                <div class="icon-box"><i class="fas fa-location-arrow"></i></div>
+                <div class="link-text">
+                    <b>The Flagship Garage</b>
+                    <span>GPS to our physical headquarters</span>
+                </div>
+                <i class="fas fa-chevron-right chevron"></i>
+            </a>
+
+        </nav>
+
+        <!-- Footer / Support -->
+        <footer class="footer">
+            <a href="#" class="support-btn">
+                <i class="fas fa-headset"></i> Customer Support
+            </a>
+            <p class="copy">
+                &copy; 2024 Velocity Gold Group <br>
+                Engineered for Excellence
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Subtle Parallax effect for the liquid blobs based on phone tilt/mouse
+        document.addEventListener('mousemove', (e) => {
+            const blobs = document.querySelectorAll('.blob');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            blobs.forEach((blob, index) => {
+                const speed = (index + 1) * 20;
+                blob.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+            });
+        });
+
+        // Add soft haptic-like vibration on link clicks (for mobile)
+        document.querySelectorAll('.glass-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.navigator.vibrate) {
+                    window.navigator.vibrate(10);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
