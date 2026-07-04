@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Velocity Gold | Premium Auto Parts</title>
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -11,11 +11,11 @@
     
     <style>
         :root {
-            --glass: rgba(15, 15, 15, 0.4); /* Darker glass for better contrast */
+            --glass: rgba(10, 10, 10, 0.7); 
             --glass-border: rgba(255, 215, 0, 0.15);
-            --gold-liquid: linear-gradient(135deg, #B8860B 0%, #8B6508 100%); /* Darker Metallic Gold */
+            --gold-liquid: linear-gradient(135deg, #B8860B 0%, #8B6508 100%);
             --ios-blur: blur(35px);
-            --black-depth: #030303;
+            --black-depth: #000000;
         }
 
         * {
@@ -32,28 +32,28 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            overflow-x: hidden;
+            overflow-x: hidden; 
             padding: 20px;
         }
 
-        /* --- INTERACTIVE DARK LIQUID CANVAS --- */
+        /* --- VISIBLE LIQUID CANVAS --- */
         #fluid-canvas {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             z-index: -1;
-            /* Contrast is key for the mixing effect; brightness kept low for readability */
-            filter: blur(50px) contrast(20) brightness(0.5); 
+            /* Adjusted filter to ensure colors don't disappear */
+            filter: blur(50px) contrast(15) brightness(0.6); 
             background: #000;
+            pointer-events: none;
         }
 
-        /* Dark Vignette to protect foreground readability */
         .vignette {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.8) 100%);
+            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.85) 100%);
             z-index: 0;
             pointer-events: none;
         }
@@ -64,15 +64,16 @@
             max-width: 430px;
             margin-top: 40px;
             z-index: 10;
+            padding-bottom: 60px;
             animation: fadeIn 1.2s ease-out;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- Profile Section --- */
+        /* --- Profile Card --- */
         .profile-card {
             background: var(--glass);
             backdrop-filter: var(--ios-blur);
@@ -82,7 +83,7 @@
             padding: 40px 25px;
             text-align: center;
             margin-bottom: 25px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
         }
 
         .avatar-glow {
@@ -95,12 +96,12 @@
         .avatar-glow::after {
             content: '';
             position: absolute;
-            top: -3px; left: -3px; right: -3px; bottom: -3px;
+            inset: -4px;
             background: var(--gold-liquid);
             border-radius: 38px;
             z-index: -1;
             opacity: 0.4;
-            filter: blur(12px);
+            filter: blur(15px);
         }
 
         .profile-pic {
@@ -117,7 +118,7 @@
             font-weight: 800;
             font-size: 1.9rem;
             letter-spacing: -1px;
-            background: linear-gradient(to bottom, #fff 40%, #B8860B);
+            background: linear-gradient(to bottom, #fff 30%, #B8860B);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 8px;
@@ -126,26 +127,25 @@
         .status-pill {
             display: inline-flex;
             align-items: center;
-            background: rgba(184, 134, 11, 0.15);
+            background: rgba(255, 255, 255, 0.05);
             color: #FFD700;
             padding: 6px 16px;
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             margin-bottom: 15px;
-            border: 1px solid rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.2);
         }
 
         .description {
-            font-size: 0.95rem;
-            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
             line-height: 1.5;
-            font-weight: 300;
         }
 
-        /* --- Professional Links --- */
+        /* --- Links --- */
         .links-grid {
             display: flex;
             flex-direction: column;
@@ -163,18 +163,17 @@
             border-radius: 26px;
             text-decoration: none;
             color: white;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.2s ease;
         }
 
         .glass-link:active {
-            transform: scale(0.97);
-            background: rgba(255, 255, 255, 0.05);
+            transform: scale(0.96);
         }
 
         .icon-box {
             width: 48px;
             height: 48px;
-            background: rgba(255,255,255,0.03);
+            background: rgba(255,255,255,0.05);
             border-radius: 16px;
             display: flex;
             align-items: center;
@@ -182,57 +181,34 @@
             margin-right: 18px;
             font-size: 1.3rem;
             color: #FFD700;
-            border: 1px solid rgba(255,215,0,0.1);
         }
 
-        .link-text { flex-grow: 1; }
-        .link-text b { display: block; font-size: 1rem; font-weight: 600; margin-bottom: 2px; }
-        .link-text span { font-size: 0.75rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.5px; }
+        .link-text b { display: block; font-size: 1rem; }
+        .link-text span { font-size: 0.7rem; color: rgba(255,255,255,0.4); }
 
-        /* Highlighted Main Website */
         .premium-btn {
             background: var(--gold-liquid);
             border: none;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
         }
         .premium-btn .link-text b { color: #000; }
-        .premium-btn .link-text span { color: rgba(0,0,0,0.6); }
-        .premium-btn .icon-box { background: rgba(0,0,0,0.1); color: #000; border: none; }
-        .premium-btn .chevron { color: #000 !important; }
+        .premium-btn .link-text span { color: rgba(0,0,0,0.5); }
+        .premium-btn .icon-box { background: rgba(0,0,0,0.1); color: #000; }
 
-        .chevron { font-size: 0.8rem; opacity: 0.3; }
-
-        /* --- Footer --- */
         .footer {
             margin-top: 45px;
             text-align: center;
-            padding-bottom: 40px;
         }
 
         .support-btn {
-            background: rgba(184, 134, 11, 0.1);
+            background: transparent;
             border: 1px solid #B8860B;
             color: #FFD700;
             padding: 14px 35px;
             border-radius: 35px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 700;
             text-transform: uppercase;
             text-decoration: none;
-            display: inline-block;
-            transition: 0.3s;
-            letter-spacing: 1px;
-        }
-
-        .support-btn:hover { background: #B8860B; color: #000; }
-
-        .carbon-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
-            opacity: 0.04;
-            pointer-events: none;
-            z-index: 15;
         }
     </style>
 </head>
@@ -240,128 +216,96 @@
 
     <canvas id="fluid-canvas"></canvas>
     <div class="vignette"></div>
-    <div class="carbon-overlay"></div>
 
     <div class="iphone-container">
-        <!-- Header -->
         <header class="profile-card">
             <div class="avatar-glow">
-                <img src="https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&q=80&w=300" alt="Velocity Gold Logo" class="profile-pic">
+                <img src="https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&q=80&w=300" alt="Logo" class="profile-pic">
             </div>
             <h1 class="brand-name">VELOCITY GOLD</h1>
-            <div class="status-pill">
-                <i class="fas fa-bolt" style="margin-right: 8px;"></i> Performance Hub
-            </div>
-            <p class="description">World-class automotive parts. Precision engineered for the most demanding enthusiasts.</p>
+            <div class="status-pill"><i class="fas fa-check-circle" style="margin-right: 8px;"></i> Official Dealer</div>
+            <p class="description">Luxury components. Precision engineering for the automotive enthusiast.</p>
         </header>
 
-        <!-- Social & Business Links -->
         <nav class="links-grid">
-            
-            <!-- Professional Website -->
             <a href="#" class="glass-link premium-btn">
-                <div class="icon-box"><i class="fas fa-globe"></i></div>
+                <div class="icon-box"><i class="fas fa-shopping-bag"></i></div>
                 <div class="link-text"><b>Official Store</b><span>Shop Performance Parts</span></div>
-                <i class="fas fa-chevron-right chevron"></i>
             </a>
-
-            <!-- WhatsApp -->
             <a href="#" class="glass-link">
                 <div class="icon-box"><i class="fab fa-whatsapp"></i></div>
-                <div class="link-text"><b>WhatsApp</b><span>Expert Technical Advice</span></div>
-                <i class="fas fa-chevron-right chevron"></i>
+                <div class="link-text"><b>WhatsApp</b><span>Live Technical Support</span></div>
             </a>
-
-            <!-- Instagram -->
             <a href="#" class="glass-link">
                 <div class="icon-box"><i class="fab fa-instagram"></i></div>
-                <div class="link-text"><b>Instagram</b><span>Project Builds & News</span></div>
-                <i class="fas fa-chevron-right chevron"></i>
+                <div class="link-text"><b>Instagram</b><span>Gallery & Builds</span></div>
             </a>
-
-            <!-- TikTok -->
             <a href="#" class="glass-link">
                 <div class="icon-box"><i class="fab fa-tiktok"></i></div>
-                <div class="link-text"><b>TikTok</b><span>Exhaust Sounds & Revs</span></div>
-                <i class="fas fa-chevron-right chevron"></i>
+                <div class="link-text"><b>TikTok</b><span>Exhaust Sounds</span></div>
             </a>
-
-            <!-- Snapchat -->
             <a href="#" class="glass-link">
                 <div class="icon-box"><i class="fab fa-snapchat"></i></div>
-                <div class="link-text"><b>Snapchat</b><span>Daily Garage Updates</span></div>
-                <i class="fas fa-chevron-right chevron"></i>
+                <div class="link-text"><b>Snapchat</b><span>Garage Flash Sales</span></div>
             </a>
-
-            <!-- Location -->
             <a href="#" class="glass-link">
-                <div class="icon-box"><i class="fas fa-map-marker-alt"></i></div>
+                <div class="icon-box"><i class="fas fa-location-arrow"></i></div>
                 <div class="link-text"><b>Showroom</b><span>Visit our Facility</span></div>
-                <i class="fas fa-chevron-right chevron"></i>
             </a>
-
         </nav>
 
-        <!-- Footer -->
         <footer class="footer">
-            <a href="#" class="support-btn">
-                <i class="fas fa-headset" style="margin-right: 10px;"></i> Customer Support
-            </a>
-            <p style="margin-top: 30px; font-size: 0.6rem; color: #444; letter-spacing: 2px;">
-                &copy; 2024 VELOCITY GOLD PERFORMANCE GROUP
-            </p>
+            <a href="#" class="support-btn">Open Support Ticket</a>
         </footer>
     </div>
 
     <script>
-        /**
-         * DARK LIQUID ENGINE
-         * Optimized for performance and readability
-         */
         const canvas = document.getElementById('fluid-canvas');
         const ctx = canvas.getContext('2d');
 
         let width, height;
         let particles = [];
-        const particleCount = 8; // Fewer, larger particles for a "heavy oil" look
+        const particleCount = 10; 
 
-        // Palette restricted to dark obsidian and deep metallic gold
+        // Increased opacity so they are visible
         const palette = [
-            { core: 'rgba(184, 134, 11, 0.4)',  edge: 'rgba(0, 0, 0, 0)' }, // Deep Gold
-            { core: 'rgba(139, 101, 8, 0.3)',   edge: 'rgba(0, 0, 0, 0)' }, // Bronze Gold
-            { core: 'rgba(10, 10, 10, 0.8)',    edge: 'rgba(0, 0, 0, 0)' }  // Deep Black
+            { core: 'rgba(184, 134, 11, 0.4)',  edge: 'rgba(0, 0, 0, 0)' }, 
+            { core: 'rgba(218, 165, 32, 0.3)',  edge: 'rgba(0, 0, 0, 0)' }, 
+            { core: 'rgba(20, 20, 20, 0.8)',    edge: 'rgba(0, 0, 0, 0)' }  
         ];
 
         let energy = 0;
-        const ENERGY_DECAY = 0.97;
-        const BASE_SPEED = 0.2;
+        const ENERGY_DECAY = 0.96;
+        const BASE_SPEED = 0.8; // Faster base movement
 
         function init() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
             particles = [];
             for (let i = 0; i < particleCount; i++) {
-                particles.push(new DarkLiquid());
+                particles.push(new LiquidNode());
             }
         }
 
-        class DarkLiquid {
+        class LiquidNode {
             constructor() {
+                this.radius = Math.random() * 300 + 200;
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.radius = Math.random() * 300 + 200;
-                this.colorSet = palette[Math.floor(Math.random() * palette.length)];
+                this.color = palette[Math.floor(Math.random() * palette.length)];
                 const angle = Math.random() * Math.PI * 2;
-                this.dirX = Math.cos(angle);
-                this.dirY = Math.sin(angle);
-                this.v = 0.5 + Math.random();
+                this.vx = Math.cos(angle);
+                this.vy = Math.sin(angle);
+                this.speedVar = 0.5 + Math.random();
             }
 
-            update(e) {
-                const s = (BASE_SPEED + e * 1.5) * this.v;
-                this.x += this.dirX * s;
-                this.y += this.dirY * s;
+            update() {
+                // Background moves constantly, speed increases with energy
+                const s = (BASE_SPEED + energy * 4) * this.speedVar;
+                this.x += this.vx * s;
+                this.y += this.vy * s;
 
+                // Smooth Wrap Around logic
                 if (this.x < -this.radius) this.x = width + this.radius;
                 if (this.x > width + this.radius) this.x = -this.radius;
                 if (this.y < -this.radius) this.y = height + this.radius;
@@ -370,8 +314,8 @@
 
             draw() {
                 const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
-                g.addColorStop(0, this.colorSet.core);
-                g.addColorStop(1, this.colorSet.edge);
+                g.addColorStop(0, this.color.core);
+                g.addColorStop(1, this.color.edge);
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
                 ctx.fillStyle = g;
@@ -379,16 +323,22 @@
             }
         }
 
-        function nudge(amt) { energy = Math.min(1.0, energy + amt); }
+        function nudge(amt) { energy = Math.min(1.5, energy + amt); }
 
-        window.addEventListener('mousemove', () => nudge(0.02));
-        window.addEventListener('touchmove', () => nudge(0.03), { passive: true });
-        window.addEventListener('scroll', () => nudge(0.05));
+        window.addEventListener('mousemove', (e) => nudge(0.02));
+        window.addEventListener('touchmove', () => nudge(0.04), { passive: true });
+        
+        let lastScroll = window.scrollY;
+        window.addEventListener('scroll', () => {
+            const diff = Math.abs(window.scrollY - lastScroll);
+            nudge(diff * 0.002);
+            lastScroll = window.scrollY;
+        }, { passive: true });
 
         function animate() {
             ctx.clearRect(0, 0, width, height);
             particles.forEach(p => {
-                p.update(energy);
+                p.update();
                 p.draw();
             });
             energy *= ENERGY_DECAY;
