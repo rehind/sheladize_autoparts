@@ -11,11 +11,11 @@
     
     <style>
         :root {
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --gold-liquid: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
-            --ios-blur: blur(30px);
-            --black-depth: #050505;
+            --glass: rgba(15, 15, 15, 0.4); /* Darker glass for better contrast */
+            --glass-border: rgba(255, 215, 0, 0.15);
+            --gold-liquid: linear-gradient(135deg, #B8860B 0%, #8B6508 100%); /* Darker Metallic Gold */
+            --ios-blur: blur(35px);
+            --black-depth: #030303;
         }
 
         * {
@@ -36,7 +36,7 @@
             padding: 20px;
         }
 
-        /* --- INTERACTIVE LIQUID CANVAS --- */
+        /* --- INTERACTIVE DARK LIQUID CANVAS --- */
         #fluid-canvas {
             position: fixed;
             top: 0;
@@ -44,10 +44,18 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            /* Softer blur/contrast so the gold blends smoothly into black
-               instead of forming hard, "muddy" circles */
-            filter: blur(60px) contrast(6) brightness(0.9);
+            /* Contrast is key for the mixing effect; brightness kept low for readability */
+            filter: blur(50px) contrast(20) brightness(0.5); 
             background: #000;
+        }
+
+        /* Dark Vignette to protect foreground readability */
+        .vignette {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.8) 100%);
+            z-index: 0;
+            pointer-events: none;
         }
 
         /* --- Main Container --- */
@@ -55,12 +63,12 @@
             width: 100%;
             max-width: 430px;
             margin-top: 40px;
-            z-index: 1;
-            animation: fadeIn 1s ease-out;
+            z-index: 10;
+            animation: fadeIn 1.2s ease-out;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -74,42 +82,42 @@
             padding: 40px 25px;
             text-align: center;
             margin-bottom: 25px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
         }
 
         .avatar-glow {
             position: relative;
-            width: 110px;
-            height: 110px;
+            width: 115px;
+            height: 115px;
             margin: 0 auto 20px;
         }
 
         .avatar-glow::after {
             content: '';
             position: absolute;
-            top: -5px; left: -5px; right: -5px; bottom: -5px;
+            top: -3px; left: -3px; right: -3px; bottom: -3px;
             background: var(--gold-liquid);
-            border-radius: 35px;
+            border-radius: 38px;
             z-index: -1;
-            opacity: 0.5;
-            filter: blur(15px);
+            opacity: 0.4;
+            filter: blur(12px);
         }
 
         .profile-pic {
-            width: 110px;
-            height: 110px;
-            border-radius: 30px;
+            width: 115px;
+            height: 115px;
+            border-radius: 35px;
             object-fit: cover;
-            border: 2px solid rgba(255,215,0,0.3);
+            border: 1px solid rgba(255,215,0,0.2);
         }
 
         .brand-name {
             font-family: 'Montserrat', sans-serif;
             font-style: italic;
             font-weight: 800;
-            font-size: 1.8rem;
+            font-size: 1.9rem;
             letter-spacing: -1px;
-            background: linear-gradient(to bottom, #fff, #888);
+            background: linear-gradient(to bottom, #fff 40%, #B8860B);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 8px;
@@ -118,31 +126,30 @@
         .status-pill {
             display: inline-flex;
             align-items: center;
-            background: rgba(255, 215, 0, 0.1);
+            background: rgba(184, 134, 11, 0.15);
             color: #FFD700;
-            padding: 5px 15px;
+            padding: 6px 16px;
             border-radius: 20px;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             margin-bottom: 15px;
-            border: 1px solid rgba(255, 215, 0, 0.2);
+            border: 1px solid rgba(255, 215, 0, 0.1);
         }
-
-        .status-pill i { font-size: 0.5rem; margin-right: 6px; }
 
         .description {
-            font-size: 0.9rem;
-            color: #aaa;
-            line-height: 1.6;
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.5;
+            font-weight: 300;
         }
 
-        /* --- Glass Links --- */
+        /* --- Professional Links --- */
         .links-grid {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
         }
 
         .glass-link {
@@ -152,186 +159,208 @@
             backdrop-filter: var(--ios-blur);
             -webkit-backdrop-filter: var(--ios-blur);
             border: 1px solid var(--glass-border);
-            padding: 18px 22px;
-            border-radius: 24px;
+            padding: 20px 24px;
+            border-radius: 26px;
             text-decoration: none;
             color: white;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .glass-link:active {
-            transform: scale(0.96);
+            transform: scale(0.97);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .icon-box {
-            width: 45px;
-            height: 45px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 14px;
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-right: 18px;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: #FFD700;
+            border: 1px solid rgba(255,215,0,0.1);
         }
 
         .link-text { flex-grow: 1; }
-        .link-text b { display: block; font-size: 0.95rem; }
-        .link-text span { font-size: 0.75rem; color: #666; }
+        .link-text b { display: block; font-size: 1rem; font-weight: 600; margin-bottom: 2px; }
+        .link-text span { font-size: 0.75rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.5px; }
 
+        /* Highlighted Main Website */
         .premium-btn {
             background: var(--gold-liquid);
             border: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
         }
         .premium-btn .link-text b { color: #000; }
-        .premium-btn .link-text span { color: rgba(0,0,0,0.5); }
-        .premium-btn .icon-box { background: rgba(0,0,0,0.15); color: #000; }
+        .premium-btn .link-text span { color: rgba(0,0,0,0.6); }
+        .premium-btn .icon-box { background: rgba(0,0,0,0.1); color: #000; border: none; }
+        .premium-btn .chevron { color: #000 !important; }
 
+        .chevron { font-size: 0.8rem; opacity: 0.3; }
+
+        /* --- Footer --- */
         .footer {
-            margin-top: 40px;
+            margin-top: 45px;
             text-align: center;
             padding-bottom: 40px;
         }
 
         .support-btn {
-            background: transparent;
-            border: 1px solid #FFD700;
+            background: rgba(184, 134, 11, 0.1);
+            border: 1px solid #B8860B;
             color: #FFD700;
-            padding: 12px 30px;
-            border-radius: 30px;
-            font-size: 0.8rem;
+            padding: 14px 35px;
+            border-radius: 35px;
+            font-size: 0.85rem;
             font-weight: 700;
             text-transform: uppercase;
             text-decoration: none;
+            display: inline-block;
+            transition: 0.3s;
+            letter-spacing: 1px;
         }
+
+        .support-btn:hover { background: #B8860B; color: #000; }
 
         .carbon-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
-            opacity: 0.03;
+            opacity: 0.04;
             pointer-events: none;
-            z-index: 10;
+            z-index: 15;
         }
     </style>
 </head>
 <body>
 
-    <!-- This canvas handles the "Mixing Liquid" background -->
     <canvas id="fluid-canvas"></canvas>
+    <div class="vignette"></div>
     <div class="carbon-overlay"></div>
 
     <div class="iphone-container">
+        <!-- Header -->
         <header class="profile-card">
             <div class="avatar-glow">
-                <img src="https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&q=80&w=300" alt="Brand Logo" class="profile-pic">
+                <img src="https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&q=80&w=300" alt="Velocity Gold Logo" class="profile-pic">
             </div>
             <h1 class="brand-name">VELOCITY GOLD</h1>
             <div class="status-pill">
-                <i class="fas fa-circle"></i> Live Inventory
+                <i class="fas fa-bolt" style="margin-right: 8px;"></i> Performance Hub
             </div>
-            <p class="description">Premium automotive engineering. Sourcing the world's finest performance parts.</p>
+            <p class="description">World-class automotive parts. Precision engineered for the most demanding enthusiasts.</p>
         </header>
 
+        <!-- Social & Business Links -->
         <nav class="links-grid">
+            
+            <!-- Professional Website -->
             <a href="#" class="glass-link premium-btn">
-                <div class="icon-box"><i class="fas fa-shopping-cart"></i></div>
-                <div class="link-text"><b>Official Boutique</b><span>High-Performance Parts</span></div>
-                <i class="fas fa-chevron-right" style="color: #000; font-size: 0.8rem;"></i>
+                <div class="icon-box"><i class="fas fa-globe"></i></div>
+                <div class="link-text"><b>Official Store</b><span>Shop Performance Parts</span></div>
+                <i class="fas fa-chevron-right chevron"></i>
             </a>
 
+            <!-- WhatsApp -->
             <a href="#" class="glass-link">
                 <div class="icon-box"><i class="fab fa-whatsapp"></i></div>
-                <div class="link-text"><b>WhatsApp Support</b><span>Direct Technical Help</span></div>
-                <i class="fas fa-chevron-right" style="opacity: 0.3; font-size: 0.8rem;"></i>
+                <div class="link-text"><b>WhatsApp</b><span>Expert Technical Advice</span></div>
+                <i class="fas fa-chevron-right chevron"></i>
             </a>
 
+            <!-- Instagram -->
             <a href="#" class="glass-link">
                 <div class="icon-box"><i class="fab fa-instagram"></i></div>
-                <div class="link-text"><b>Showroom</b><span>Daily Builds & Media</span></div>
-                <i class="fas fa-chevron-right" style="opacity: 0.3; font-size: 0.8rem;"></i>
+                <div class="link-text"><b>Instagram</b><span>Project Builds & News</span></div>
+                <i class="fas fa-chevron-right chevron"></i>
             </a>
 
+            <!-- TikTok -->
             <a href="#" class="glass-link">
                 <div class="icon-box"><i class="fab fa-tiktok"></i></div>
-                <div class="link-text"><b>TikTok</b><span>Dyno Runs & Exhaust Notes</span></div>
-                <i class="fas fa-chevron-right" style="opacity: 0.3; font-size: 0.8rem;"></i>
+                <div class="link-text"><b>TikTok</b><span>Exhaust Sounds & Revs</span></div>
+                <i class="fas fa-chevron-right chevron"></i>
             </a>
 
+            <!-- Snapchat -->
             <a href="#" class="glass-link">
-                <div class="icon-box"><i class="fas fa-location-dot"></i></div>
-                <div class="link-text"><b>Find Us</b><span>HQ & Installation Center</span></div>
-                <i class="fas fa-chevron-right" style="opacity: 0.3; font-size: 0.8rem;"></i>
+                <div class="icon-box"><i class="fab fa-snapchat"></i></div>
+                <div class="link-text"><b>Snapchat</b><span>Daily Garage Updates</span></div>
+                <i class="fas fa-chevron-right chevron"></i>
             </a>
+
+            <!-- Location -->
+            <a href="#" class="glass-link">
+                <div class="icon-box"><i class="fas fa-map-marker-alt"></i></div>
+                <div class="link-text"><b>Showroom</b><span>Visit our Facility</span></div>
+                <i class="fas fa-chevron-right chevron"></i>
+            </a>
+
         </nav>
 
+        <!-- Footer -->
         <footer class="footer">
-            <a href="#" class="support-btn">Open Support Ticket</a>
-            <p style="margin-top: 20px; font-size: 0.6rem; color: #444; letter-spacing: 2px;">&copy; 2024 VELOCITY GOLD PERFORMANCE</p>
+            <a href="#" class="support-btn">
+                <i class="fas fa-headset" style="margin-right: 10px;"></i> Customer Support
+            </a>
+            <p style="margin-top: 30px; font-size: 0.6rem; color: #444; letter-spacing: 2px;">
+                &copy; 2024 VELOCITY GOLD PERFORMANCE GROUP
+            </p>
         </footer>
     </div>
 
     <script>
         /**
-         * LIQUID MIXING ENGINE (v2)
-         * - Always drifts at a smooth, constant base speed.
-         * - Touch/scroll/mouse only nudges a single global "energy" value up.
-         * - Energy decays back to zero every frame (critically damped),
-         *   so it always eases back down instead of stacking forever.
-         * - Colors restricted to a gold/black family, drawn as soft
-         *   radial gradients instead of flat circles, so the blend
-         *   reads as "liquid gold" rather than muddy round blobs.
+         * DARK LIQUID ENGINE
+         * Optimized for performance and readability
          */
         const canvas = document.getElementById('fluid-canvas');
         const ctx = canvas.getContext('2d');
 
         let width, height;
         let particles = [];
-        const particleCount = 10;
+        const particleCount = 8; // Fewer, larger particles for a "heavy oil" look
 
-        // Gold + black only — no more brown/grey mud
+        // Palette restricted to dark obsidian and deep metallic gold
         const palette = [
-            { core: 'rgba(255, 215, 0, 0.9)',  edge: 'rgba(255, 215, 0, 0)'  }, // bright gold
-            { core: 'rgba(184, 134, 11, 0.85)', edge: 'rgba(184, 134, 11, 0)' }, // deep gold
-            { core: 'rgba(20, 16, 4, 0.9)',     edge: 'rgba(20, 16, 4, 0)'    }, // near-black
+            { core: 'rgba(184, 134, 11, 0.4)',  edge: 'rgba(0, 0, 0, 0)' }, // Deep Gold
+            { core: 'rgba(139, 101, 8, 0.3)',   edge: 'rgba(0, 0, 0, 0)' }, // Bronze Gold
+            { core: 'rgba(10, 10, 10, 0.8)',    edge: 'rgba(0, 0, 0, 0)' }  // Deep Black
         ];
 
-        // Global motion energy: 0 = resting/base speed, grows on interaction,
-        // always eases back to 0 on its own.
         let energy = 0;
-        const ENERGY_DECAY = 0.965;   // per-frame decay factor (smaller = faster settle)
-        const ENERGY_MAX = 1.0;       // hard cap so it can never "run away"
-        const BASE_SPEED = 0.15;      // constant slow drift, always present
-        const BOOST_SPEED = 0.9;      // extra speed added at full energy
+        const ENERGY_DECAY = 0.97;
+        const BASE_SPEED = 0.2;
 
         function init() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
             particles = [];
             for (let i = 0; i < particleCount; i++) {
-                particles.push(new LiquidParticle());
+                particles.push(new DarkLiquid());
             }
         }
 
-        class LiquidParticle {
+        class DarkLiquid {
             constructor() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.radius = Math.random() * 160 + 110;
+                this.radius = Math.random() * 300 + 200;
                 this.colorSet = palette[Math.floor(Math.random() * palette.length)];
-                // fixed, gentle heading — direction never gets overwritten by input
                 const angle = Math.random() * Math.PI * 2;
                 this.dirX = Math.cos(angle);
                 this.dirY = Math.sin(angle);
-                // slight per-particle variance so they don't all move in lockstep
-                this.variance = 0.6 + Math.random() * 0.8;
+                this.v = 0.5 + Math.random();
             }
 
-            update(speedMultiplier) {
-                const speed = (BASE_SPEED + BOOST_SPEED * speedMultiplier) * this.variance;
-                this.x += this.dirX * speed;
-                this.y += this.dirY * speed;
+            update(e) {
+                const s = (BASE_SPEED + e * 1.5) * this.v;
+                this.x += this.dirX * s;
+                this.y += this.dirY * s;
 
                 if (this.x < -this.radius) this.x = width + this.radius;
                 if (this.x > width + this.radius) this.x = -this.radius;
@@ -340,43 +369,29 @@
             }
 
             draw() {
-                const gradient = ctx.createRadialGradient(
-                    this.x, this.y, 0,
-                    this.x, this.y, this.radius
-                );
-                gradient.addColorStop(0, this.colorSet.core);
-                gradient.addColorStop(1, this.colorSet.edge);
+                const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+                g.addColorStop(0, this.colorSet.core);
+                g.addColorStop(1, this.colorSet.edge);
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = gradient;
+                ctx.fillStyle = g;
                 ctx.fill();
             }
         }
 
-        // Any interaction just bumps energy toward its max —
-        // it can never exceed ENERGY_MAX no matter how much you touch it.
-        function nudgeEnergy(amount) {
-            energy = Math.min(ENERGY_MAX, energy + amount);
-        }
+        function nudge(amt) { energy = Math.min(1.0, energy + amt); }
 
-        window.addEventListener('mousemove', () => nudgeEnergy(0.04));
-        window.addEventListener('touchmove', () => nudgeEnergy(0.05), { passive: true });
-        window.addEventListener('scroll', () => nudgeEnergy(0.08));
-        window.addEventListener('wheel', () => nudgeEnergy(0.05));
+        window.addEventListener('mousemove', () => nudge(0.02));
+        window.addEventListener('touchmove', () => nudge(0.03), { passive: true });
+        window.addEventListener('scroll', () => nudge(0.05));
 
         function animate() {
             ctx.clearRect(0, 0, width, height);
-
             particles.forEach(p => {
                 p.update(energy);
                 p.draw();
             });
-
-            // Ease energy back down toward 0 every single frame,
-            // regardless of how it got bumped up.
             energy *= ENERGY_DECAY;
-            if (energy < 0.001) energy = 0;
-
             requestAnimationFrame(animate);
         }
 
