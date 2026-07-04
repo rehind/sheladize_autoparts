@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gold Standard | Premium Auto Parts</title>
+    <title>Velocity Gold | Premium Auto Parts</title>
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Fonts -->
@@ -14,7 +14,7 @@
             --glass: rgba(255, 255, 255, 0.03);
             --glass-border: rgba(255, 255, 255, 0.08);
             --gold-liquid: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
-            --ios-blur: blur(25px);
+            --ios-blur: blur(30px);
             --black-depth: #050505;
         }
 
@@ -36,30 +36,18 @@
             padding: 20px;
         }
 
-        /* --- Animated Liquid Background --- */
-        .liquid-bg {
+        /* --- INTERACTIVE LIQUID CANVAS --- */
+        #fluid-canvas {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: -1;
-            filter: blur(80px);
-            background: radial-gradient(circle at 50% 50%, #111, #000);
-        }
-
-        .blob {
-            position: absolute;
-            background: #FFD700;
-            opacity: 0.15;
-            border-radius: 50%;
-            animation: move 20s infinite alternate;
-        }
-
-        .blob-1 { width: 400px; height: 400px; top: -100px; left: -100px; background: #FFD700; }
-        .blob-2 { width: 300px; height: 300px; bottom: -50px; right: -50px; background: #B8860B; animation-delay: -5s; }
-        .blob-3 { width: 250px; height: 250px; top: 40%; left: 30%; background: #DAA520; animation-delay: -10s; }
-
-        @keyframes move {
-            from { transform: translate(0, 0) scale(1); }
-            to { transform: translate(50px, 100px) scale(1.2); }
+            /* Softer blur/contrast so the gold blends smoothly into black
+               instead of forming hard, "muddy" circles */
+            filter: blur(60px) contrast(6) brightness(0.9);
+            background: #000;
         }
 
         /* --- Main Container --- */
@@ -86,7 +74,7 @@
             padding: 40px 25px;
             text-align: center;
             margin-bottom: 25px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
         .avatar-glow {
@@ -104,7 +92,7 @@
             border-radius: 35px;
             z-index: -1;
             opacity: 0.5;
-            filter: blur(10px);
+            filter: blur(15px);
         }
 
         .profile-pic {
@@ -148,7 +136,6 @@
             font-size: 0.9rem;
             color: #aaa;
             line-height: 1.6;
-            font-weight: 400;
         }
 
         /* --- Glass Links --- */
@@ -174,13 +161,12 @@
 
         .glass-link:active {
             transform: scale(0.96);
-            background: rgba(255, 255, 255, 0.08);
         }
 
         .icon-box {
             width: 45px;
             height: 45px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+            background: rgba(255,255,255,0.05);
             border-radius: 14px;
             display: flex;
             align-items: center;
@@ -188,43 +174,20 @@
             margin-right: 18px;
             font-size: 1.2rem;
             color: #FFD700;
-            box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
         }
 
-        .link-text {
-            flex-grow: 1;
-        }
+        .link-text { flex-grow: 1; }
+        .link-text b { display: block; font-size: 0.95rem; }
+        .link-text span { font-size: 0.75rem; color: #666; }
 
-        .link-text b {
-            display: block;
-            font-size: 0.95rem;
-            font-weight: 600;
-            letter-spacing: 0.3px;
-        }
-
-        .link-text span {
-            font-size: 0.75rem;
-            color: #666;
-        }
-
-        .chevron {
-            font-size: 0.8rem;
-            color: #444;
-        }
-
-        /* --- Highlighted Website Button --- */
         .premium-btn {
             background: var(--gold-liquid);
             border: none;
-            box-shadow: 0 10px 30px rgba(184, 134, 11, 0.3);
         }
-
-        .premium-btn .icon-box { background: rgba(0,0,0,0.2); color: white; }
         .premium-btn .link-text b { color: #000; }
         .premium-btn .link-text span { color: rgba(0,0,0,0.5); }
-        .premium-btn .chevron { color: #000; }
+        .premium-btn .icon-box { background: rgba(0,0,0,0.15); color: #000; }
 
-        /* --- Footer --- */
         .footer {
             margin-top: 40px;
             text-align: center;
@@ -241,29 +204,13 @@
             font-weight: 700;
             text-transform: uppercase;
             text-decoration: none;
-            display: inline-block;
-            transition: 0.3s;
         }
 
-        .support-btn:hover {
-            background: #FFD700;
-            color: #000;
-        }
-
-        .copy {
-            margin-top: 25px;
-            font-size: 0.65rem;
-            color: #444;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* Carbon Texture Detail */
         .carbon-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
-            opacity: 0.05;
+            opacity: 0.03;
             pointer-events: none;
             z-index: 10;
         }
@@ -271,125 +218,171 @@
 </head>
 <body>
 
-    <div class="liquid-bg">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
-    </div>
-
+    <!-- This canvas handles the "Mixing Liquid" background -->
+    <canvas id="fluid-canvas"></canvas>
     <div class="carbon-overlay"></div>
 
     <div class="iphone-container">
-        <!-- Header Profile Card -->
         <header class="profile-card">
             <div class="avatar-glow">
                 <img src="https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&q=80&w=300" alt="Brand Logo" class="profile-pic">
             </div>
             <h1 class="brand-name">VELOCITY GOLD</h1>
             <div class="status-pill">
-                <i class="fas fa-circle"></i> Certified Performance Dealer
+                <i class="fas fa-circle"></i> Live Inventory
             </div>
-            <p class="description">Elevating the automotive experience with liquid-smooth precision and premium-grade components.</p>
+            <p class="description">Premium automotive engineering. Sourcing the world's finest performance parts.</p>
         </header>
 
-        <!-- Dynamic Link List -->
         <nav class="links-grid">
-            
-            <!-- Professional Website -->
             <a href="#" class="glass-link premium-btn">
-                <div class="icon-box"><i class="fas fa-globe"></i></div>
-                <div class="link-text">
-                    <b>Official Boutique</b>
-                    <span>Order High-Performance Parts</span>
-                </div>
-                <i class="fas fa-chevron-right chevron"></i>
+                <div class="icon-box"><i class="fas fa-shopping-cart"></i></div>
+                <div class="link-text"><b>Official Boutique</b><span>High-Performance Parts</span></div>
+                <i class="fas fa-chevron-right" style="color: #000; font-size: 0.8rem;"></i>
             </a>
 
-            <!-- WhatsApp -->
             <a href="#" class="glass-link">
                 <div class="icon-box"><i class="fab fa-whatsapp"></i></div>
-                <div class="link-text">
-                    <b>WhatsApp VIP</b>
-                    <span>Direct line to our lead mechanic</span>
-                </div>
-                <i class="fas fa-chevron-right chevron"></i>
+                <div class="link-text"><b>WhatsApp Support</b><span>Direct Technical Help</span></div>
+                <i class="fas fa-chevron-right" style="opacity: 0.3; font-size: 0.8rem;"></i>
             </a>
 
-            <!-- Instagram -->
             <a href="#" class="glass-link">
                 <div class="icon-box"><i class="fab fa-instagram"></i></div>
-                <div class="link-text">
-                    <b>Showroom Instagram</b>
-                    <span>Visuals of our latest gold-tier builds</span>
-                </div>
-                <i class="fas fa-chevron-right chevron"></i>
+                <div class="link-text"><b>Showroom</b><span>Daily Builds & Media</span></div>
+                <i class="fas fa-chevron-right" style="opacity: 0.3; font-size: 0.8rem;"></i>
             </a>
 
-            <!-- TikTok -->
             <a href="#" class="glass-link">
                 <div class="icon-box"><i class="fab fa-tiktok"></i></div>
-                <div class="link-text">
-                    <b>Velocity TV (TikTok)</b>
-                    <span>Raw exhaust notes & part reveals</span>
-                </div>
-                <i class="fas fa-chevron-right chevron"></i>
+                <div class="link-text"><b>TikTok</b><span>Dyno Runs & Exhaust Notes</span></div>
+                <i class="fas fa-chevron-right" style="opacity: 0.3; font-size: 0.8rem;"></i>
             </a>
 
-            <!-- Snapchat -->
             <a href="#" class="glass-link">
-                <div class="icon-box"><i class="fab fa-snapchat"></i></div>
-                <div class="link-text">
-                    <b>Daily Garage Snaps</b>
-                    <span>Exclusive look behind the curtain</span>
-                </div>
-                <i class="fas fa-chevron-right chevron"></i>
+                <div class="icon-box"><i class="fas fa-location-dot"></i></div>
+                <div class="link-text"><b>Find Us</b><span>HQ & Installation Center</span></div>
+                <i class="fas fa-chevron-right" style="opacity: 0.3; font-size: 0.8rem;"></i>
             </a>
-
-            <!-- Location -->
-            <a href="#" class="glass-link">
-                <div class="icon-box"><i class="fas fa-location-arrow"></i></div>
-                <div class="link-text">
-                    <b>The Flagship Garage</b>
-                    <span>GPS to our physical headquarters</span>
-                </div>
-                <i class="fas fa-chevron-right chevron"></i>
-            </a>
-
         </nav>
 
-        <!-- Footer / Support -->
         <footer class="footer">
-            <a href="#" class="support-btn">
-                <i class="fas fa-headset"></i> Customer Support
-            </a>
-            <p class="copy">
-                &copy; 2024 Velocity Gold Group <br>
-                Engineered for Excellence
-            </p>
+            <a href="#" class="support-btn">Open Support Ticket</a>
+            <p style="margin-top: 20px; font-size: 0.6rem; color: #444; letter-spacing: 2px;">&copy; 2024 VELOCITY GOLD PERFORMANCE</p>
         </footer>
     </div>
 
     <script>
-        // Subtle Parallax effect for the liquid blobs based on phone tilt/mouse
-        document.addEventListener('mousemove', (e) => {
-            const blobs = document.querySelectorAll('.blob');
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
-            
-            blobs.forEach((blob, index) => {
-                const speed = (index + 1) * 20;
-                blob.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
-            });
-        });
+        /**
+         * LIQUID MIXING ENGINE (v2)
+         * - Always drifts at a smooth, constant base speed.
+         * - Touch/scroll/mouse only nudges a single global "energy" value up.
+         * - Energy decays back to zero every frame (critically damped),
+         *   so it always eases back down instead of stacking forever.
+         * - Colors restricted to a gold/black family, drawn as soft
+         *   radial gradients instead of flat circles, so the blend
+         *   reads as "liquid gold" rather than muddy round blobs.
+         */
+        const canvas = document.getElementById('fluid-canvas');
+        const ctx = canvas.getContext('2d');
 
-        // Add soft haptic-like vibration on link clicks (for mobile)
-        document.querySelectorAll('.glass-link').forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.navigator.vibrate) {
-                    window.navigator.vibrate(10);
-                }
+        let width, height;
+        let particles = [];
+        const particleCount = 10;
+
+        // Gold + black only — no more brown/grey mud
+        const palette = [
+            { core: 'rgba(255, 215, 0, 0.9)',  edge: 'rgba(255, 215, 0, 0)'  }, // bright gold
+            { core: 'rgba(184, 134, 11, 0.85)', edge: 'rgba(184, 134, 11, 0)' }, // deep gold
+            { core: 'rgba(20, 16, 4, 0.9)',     edge: 'rgba(20, 16, 4, 0)'    }, // near-black
+        ];
+
+        // Global motion energy: 0 = resting/base speed, grows on interaction,
+        // always eases back to 0 on its own.
+        let energy = 0;
+        const ENERGY_DECAY = 0.965;   // per-frame decay factor (smaller = faster settle)
+        const ENERGY_MAX = 1.0;       // hard cap so it can never "run away"
+        const BASE_SPEED = 0.15;      // constant slow drift, always present
+        const BOOST_SPEED = 0.9;      // extra speed added at full energy
+
+        function init() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new LiquidParticle());
+            }
+        }
+
+        class LiquidParticle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.radius = Math.random() * 160 + 110;
+                this.colorSet = palette[Math.floor(Math.random() * palette.length)];
+                // fixed, gentle heading — direction never gets overwritten by input
+                const angle = Math.random() * Math.PI * 2;
+                this.dirX = Math.cos(angle);
+                this.dirY = Math.sin(angle);
+                // slight per-particle variance so they don't all move in lockstep
+                this.variance = 0.6 + Math.random() * 0.8;
+            }
+
+            update(speedMultiplier) {
+                const speed = (BASE_SPEED + BOOST_SPEED * speedMultiplier) * this.variance;
+                this.x += this.dirX * speed;
+                this.y += this.dirY * speed;
+
+                if (this.x < -this.radius) this.x = width + this.radius;
+                if (this.x > width + this.radius) this.x = -this.radius;
+                if (this.y < -this.radius) this.y = height + this.radius;
+                if (this.y > height + this.radius) this.y = -this.radius;
+            }
+
+            draw() {
+                const gradient = ctx.createRadialGradient(
+                    this.x, this.y, 0,
+                    this.x, this.y, this.radius
+                );
+                gradient.addColorStop(0, this.colorSet.core);
+                gradient.addColorStop(1, this.colorSet.edge);
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = gradient;
+                ctx.fill();
+            }
+        }
+
+        // Any interaction just bumps energy toward its max —
+        // it can never exceed ENERGY_MAX no matter how much you touch it.
+        function nudgeEnergy(amount) {
+            energy = Math.min(ENERGY_MAX, energy + amount);
+        }
+
+        window.addEventListener('mousemove', () => nudgeEnergy(0.04));
+        window.addEventListener('touchmove', () => nudgeEnergy(0.05), { passive: true });
+        window.addEventListener('scroll', () => nudgeEnergy(0.08));
+        window.addEventListener('wheel', () => nudgeEnergy(0.05));
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            particles.forEach(p => {
+                p.update(energy);
+                p.draw();
             });
-        });
+
+            // Ease energy back down toward 0 every single frame,
+            // regardless of how it got bumped up.
+            energy *= ENERGY_DECAY;
+            if (energy < 0.001) energy = 0;
+
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
+        window.addEventListener('resize', init);
     </script>
 </body>
 </html>
