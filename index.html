@@ -2,352 +2,212 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Velocity Gold | Premium Auto Parts</title>
-    <!-- Icons -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand Identity | Connect With Us</title>
+    <!-- Google Fonts for a professional look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome for sleek social icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:ital,wght@1,800&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --glass: rgba(10, 10, 10, 0.7); 
-            --glass-border: rgba(255, 215, 0, 0.15);
-            --gold-liquid: linear-gradient(135deg, #B8860B 0%, #8B6508 100%);
-            --ios-blur: blur(35px);
-            --black-depth: #000000;
+            --primary-bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-main: #1a1a1a;
+            --text-muted: #666666;
+            --accent-color: #000000; /* Change this to your brand color */
+            --button-hover: #333333;
+            --transition: all 0.3s ease;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--black-depth);
             font-family: 'Inter', sans-serif;
-            color: white;
-            min-height: 100vh;
+            background-color: var(--primary-bg);
+            color: var(--text-main);
             display: flex;
             justify-content: center;
-            overflow-x: hidden; 
-            padding: 20px;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 40px 20px;
         }
 
-        /* --- VISIBLE LIQUID CANVAS --- */
-        #fluid-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            /* Adjusted filter to ensure colors don't disappear */
-            filter: blur(50px) contrast(15) brightness(0.6); 
-            background: #000;
-            pointer-events: none;
-        }
-
-        .vignette {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.85) 100%);
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        /* --- Main Container --- */
-        .iphone-container {
+        .container {
             width: 100%;
-            max-width: 430px;
-            margin-top: 40px;
-            z-index: 10;
-            padding-bottom: 60px;
-            animation: fadeIn 1.2s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- Profile Card --- */
-        .profile-card {
-            background: var(--glass);
-            backdrop-filter: var(--ios-blur);
-            -webkit-backdrop-filter: var(--ios-blur);
-            border: 1px solid var(--glass-border);
-            border-radius: 40px;
-            padding: 40px 25px;
+            max-width: 450px;
             text-align: center;
-            margin-bottom: 25px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
         }
 
-        .avatar-glow {
-            position: relative;
-            width: 115px;
-            height: 115px;
-            margin: 0 auto 20px;
+        /* Profile Section */
+        .profile-section {
+            margin-bottom: 32px;
         }
 
-        .avatar-glow::after {
-            content: '';
-            position: absolute;
-            inset: -4px;
-            background: var(--gold-liquid);
-            border-radius: 38px;
-            z-index: -1;
-            opacity: 0.4;
-            filter: blur(15px);
-        }
-
-        .profile-pic {
-            width: 115px;
-            height: 115px;
-            border-radius: 35px;
+        .brand-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
             object-fit: cover;
-            border: 1px solid rgba(255,215,0,0.2);
+            border: 3px solid var(--card-bg);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 16px;
         }
 
         .brand-name {
-            font-family: 'Montserrat', sans-serif;
-            font-style: italic;
-            font-weight: 800;
-            font-size: 1.9rem;
-            letter-spacing: -1px;
-            background: linear-gradient(to bottom, #fff 30%, #B8860B);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
             margin-bottom: 8px;
         }
 
-        .status-pill {
-            display: inline-flex;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.05);
-            color: #FFD700;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(255, 215, 0, 0.2);
-        }
-
-        .description {
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.6);
+        .brand-description {
+            font-size: 0.95rem;
+            color: var(--text-muted);
             line-height: 1.5;
+            padding: 0 10px;
         }
 
-        /* --- Links --- */
-        .links-grid {
+        /* Links Section */
+        .links-container {
             display: flex;
             flex-direction: column;
             gap: 14px;
         }
 
-        .glass-link {
-            display: flex;
-            align-items: center;
-            background: var(--glass);
-            backdrop-filter: var(--ios-blur);
-            -webkit-backdrop-filter: var(--ios-blur);
-            border: 1px solid var(--glass-border);
-            padding: 20px 24px;
-            border-radius: 26px;
+        .link-card {
+            background-color: var(--card-bg);
+            color: var(--text-main);
             text-decoration: none;
-            color: white;
-            transition: transform 0.2s ease;
-        }
-
-        .glass-link:active {
-            transform: scale(0.96);
-        }
-
-        .icon-box {
-            width: 48px;
-            height: 48px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 16px;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 400;
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin-right: 18px;
-            font-size: 1.3rem;
-            color: #FFD700;
+            justify-content: space-between;
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
 
-        .link-text b { display: block; font-size: 1rem; }
-        .link-text span { font-size: 0.7rem; color: rgba(255,255,255,0.4); }
-
-        .premium-btn {
-            background: var(--gold-liquid);
-            border: none;
+        .link-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+            border-color: var(--accent-color);
         }
-        .premium-btn .link-text b { color: #000; }
-        .premium-btn .link-text span { color: rgba(0,0,0,0.5); }
-        .premium-btn .icon-box { background: rgba(0,0,0,0.1); color: #000; }
 
-        .footer {
-            margin-top: 45px;
+        .link-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .link-content i {
+            font-size: 1.2rem;
+            width: 24px;
             text-align: center;
         }
 
-        .support-btn {
-            background: transparent;
-            border: 1px solid #B8860B;
-            color: #FFD700;
-            padding: 14px 35px;
-            border-radius: 35px;
+        .arrow-icon {
             font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            text-decoration: none;
+            color: #ccc;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 50px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Mobile Responsiveness Improvements */
+        @media (max-width: 480px) {
+            body { padding: 30px 15px; }
+            .brand-name { font-size: 1.3rem; }
         }
     </style>
 </head>
 <body>
 
-    <canvas id="fluid-canvas"></canvas>
-    <div class="vignette"></div>
-
-    <div class="iphone-container">
-        <header class="profile-card">
-            <div class="avatar-glow">
-                <img src="https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&q=80&w=300" alt="Logo" class="profile-pic">
-            </div>
-            <h1 class="brand-name">VELOCITY GOLD</h1>
-            <div class="status-pill"><i class="fas fa-check-circle" style="margin-right: 8px;"></i> Official Dealer</div>
-            <p class="description">Luxury components. Precision engineering for the automotive enthusiast.</p>
+    <div class="container">
+        <!-- Brand Identity Section -->
+        <header class="profile-section">
+            <!-- Replace with your actual image URL -->
+            <img src="https://via.placeholder.com/150" alt="Brand Logo" class="brand-logo">
+            <h1 class="brand-name">Local Artisan Co.</h1>
+            <p class="brand-description">Handcrafted essentials for your everyday life. Locally sourced and made with love in our city.</p>
         </header>
 
-        <nav class="links-grid">
-            <a href="#" class="glass-link premium-btn">
-                <div class="icon-box"><i class="fas fa-shopping-bag"></i></div>
-                <div class="link-text"><b>Official Store</b><span>Shop Performance Parts</span></div>
+        <!-- Dynamic Links List -->
+        <main class="links-container">
+            
+            <a href="https://www.yourwebsite.com" class="link-card" target="_blank">
+                <div class="link-content">
+                    <i class="fas fa-globe"></i>
+                    <span>Official Website</span>
+                </div>
+                <i class="fas fa-chevron-right arrow-icon"></i>
             </a>
-            <a href="#" class="glass-link">
-                <div class="icon-box"><i class="fab fa-whatsapp"></i></div>
-                <div class="link-text"><b>WhatsApp</b><span>Live Technical Support</span></div>
-            </a>
-            <a href="#" class="glass-link">
-                <div class="icon-box"><i class="fab fa-instagram"></i></div>
-                <div class="link-text"><b>Instagram</b><span>Gallery & Builds</span></div>
-            </a>
-            <a href="#" class="glass-link">
-                <div class="icon-box"><i class="fab fa-tiktok"></i></div>
-                <div class="link-text"><b>TikTok</b><span>Exhaust Sounds</span></div>
-            </a>
-            <a href="#" class="glass-link">
-                <div class="icon-box"><i class="fab fa-snapchat"></i></div>
-                <div class="link-text"><b>Snapchat</b><span>Garage Flash Sales</span></div>
-            </a>
-            <a href="#" class="glass-link">
-                <div class="icon-box"><i class="fas fa-location-arrow"></i></div>
-                <div class="link-text"><b>Showroom</b><span>Visit our Facility</span></div>
-            </a>
-        </nav>
 
-        <footer class="footer">
-            <a href="#" class="support-btn">Open Support Ticket</a>
+            <a href="https://instagram.com/yourhandle" class="link-card" target="_blank">
+                <div class="link-content">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                </div>
+                <i class="fas fa-chevron-right arrow-icon"></i>
+            </a>
+
+            <a href="https://tiktok.com/@yourhandle" class="link-card" target="_blank">
+                <div class="link-content">
+                    <i class="fab fa-tiktok"></i>
+                    <span>TikTok</span>
+                </div>
+                <i class="fas fa-chevron-right arrow-icon"></i>
+            </a>
+
+            <a href="https://wa.me/yourphonenumber" class="link-card" target="_blank">
+                <div class="link-content">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp Us</span>
+                </div>
+                <i class="fas fa-chevron-right arrow-icon"></i>
+            </a>
+
+            <a href="https://goo.gl/maps/yourlocation" class="link-card" target="_blank">
+                <div class="link-content">
+                    <i class="fas fa-location-dot"></i>
+                    <span>Our Location</span>
+                </div>
+                <i class="fas fa-chevron-right arrow-icon"></i>
+            </a>
+
+            <a href="https://snapchat.com/add/yourhandle" class="link-card" target="_blank">
+                <div class="link-content">
+                    <i class="fab fa-snapchat"></i>
+                    <span>Snapchat</span>
+                </div>
+                <i class="fas fa-chevron-right arrow-icon"></i>
+            </a>
+
+        </main>
+
+        <footer>
+            <p>&copy; 2024 Local Artisan Co. | All Rights Reserved</p>
         </footer>
     </div>
 
+    <!-- Minimal JavaScript for Interaction (Optional) -->
     <script>
-        const canvas = document.getElementById('fluid-canvas');
-        const ctx = canvas.getContext('2d');
-
-        let width, height;
-        let particles = [];
-        const particleCount = 10; 
-
-        // Increased opacity so they are visible
-        const palette = [
-            { core: 'rgba(184, 134, 11, 0.4)',  edge: 'rgba(0, 0, 0, 0)' }, 
-            { core: 'rgba(218, 165, 32, 0.3)',  edge: 'rgba(0, 0, 0, 0)' }, 
-            { core: 'rgba(20, 20, 20, 0.8)',    edge: 'rgba(0, 0, 0, 0)' }  
-        ];
-
-        let energy = 0;
-        const ENERGY_DECAY = 0.96;
-        const BASE_SPEED = 0.8; // Faster base movement
-
-        function init() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-            particles = [];
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new LiquidNode());
-            }
-        }
-
-        class LiquidNode {
-            constructor() {
-                this.radius = Math.random() * 300 + 200;
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.color = palette[Math.floor(Math.random() * palette.length)];
-                const angle = Math.random() * Math.PI * 2;
-                this.vx = Math.cos(angle);
-                this.vy = Math.sin(angle);
-                this.speedVar = 0.5 + Math.random();
-            }
-
-            update() {
-                // Background moves constantly, speed increases with energy
-                const s = (BASE_SPEED + energy * 4) * this.speedVar;
-                this.x += this.vx * s;
-                this.y += this.vy * s;
-
-                // Smooth Wrap Around logic
-                if (this.x < -this.radius) this.x = width + this.radius;
-                if (this.x > width + this.radius) this.x = -this.radius;
-                if (this.y < -this.radius) this.y = height + this.radius;
-                if (this.y > height + this.radius) this.y = -this.radius;
-            }
-
-            draw() {
-                const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
-                g.addColorStop(0, this.color.core);
-                g.addColorStop(1, this.color.edge);
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = g;
-                ctx.fill();
-            }
-        }
-
-        function nudge(amt) { energy = Math.min(1.5, energy + amt); }
-
-        window.addEventListener('mousemove', (e) => nudge(0.02));
-        window.addEventListener('touchmove', () => nudge(0.04), { passive: true });
-        
-        let lastScroll = window.scrollY;
-        window.addEventListener('scroll', () => {
-            const diff = Math.abs(window.scrollY - lastScroll);
-            nudge(diff * 0.002);
-            lastScroll = window.scrollY;
-        }, { passive: true });
-
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
+        // Smoothly log clicks for analytics (optional)
+        document.querySelectorAll('.link-card').forEach(item => {
+            item.addEventListener('click', event => {
+                console.log("Navigating to: " + item.innerText);
             });
-            energy *= ENERGY_DECAY;
-            requestAnimationFrame(animate);
-        }
-
-        init();
-        animate();
-        window.addEventListener('resize', init);
+        });
     </script>
 </body>
 </html>
